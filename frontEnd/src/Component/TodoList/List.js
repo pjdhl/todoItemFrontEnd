@@ -7,7 +7,8 @@ class List extends Component {
     constructor(props) {
         super(props)
         this.state = {
-            todoList: [],
+            todoPendingList: [],
+            todoFinishList: [],
             addValue: ""
         }
     }
@@ -18,7 +19,8 @@ class List extends Component {
         axios.get("http://localhost:8080/api/all")
             .then(res => {
                 this.setState({
-                    todoList: res.data
+                    todoFinishList: res.data.filter(item => item.status === "finish"),
+                    todoPendingList: res.data.filter(item => item.status === "pending")
                 })
             }).catch(error => {
                 console.log(error)
@@ -38,14 +40,14 @@ class List extends Component {
             console.log(error)
         });
     }
-    removeItem(index) {
+    removeItem(id) {
         axios({
             method: 'delete',
             url: 'http://localhost:8080/api/one',
             params: {
-                id: index
+                id: id
             }
-        }).then((res) => {
+        }).then(() => {
             this.getList();
         }).catch((error) => {
             console.log(error)
@@ -58,7 +60,7 @@ class List extends Component {
             params: {
                 status: status
             }
-        }).then((res) => {
+        }).then(() => {
             this.getList();
         }).catch((error) => {
             console.log(error)
@@ -79,14 +81,20 @@ class List extends Component {
     }
 
     render() {
-        var items = this.state.todoList.map((item, index) => {
+        var pendingItems = this.state.todoPendingList.map((item, index) => {
+            return (
+                <Item key={index} item={item} index={item.id} removeItem={this.removeItem.bind(this, item.id)} markTodoDone={this.changeStatus.bind(this, item, item.status === "finish" ? "pending" : "finish")} />
+            );
+        });
+        var finishItems = this.state.todoFinishList.map((item, index) => {
             return (
                 <Item key={index} item={item} index={item.id} removeItem={this.removeItem.bind(this, item.id)} markTodoDone={this.changeStatus.bind(this, item, item.status === "finish" ? "pending" : "finish")} />
             );
         });
         return (
             <div className="list">
-                <ul className="list-group"> {items} </ul>
+                <ul className="list-group"> {pendingItems} </ul>
+                <ul className="list-group"> {finishItems} </ul>
                 <input type="text" onChange={this.changeText.bind(this)} value={this.state.addValue} className="add-item" placeholder="add a new todo..." />
                 <button onClick={this.addList.bind(this)} className="btn">Add</button>
             </div>
