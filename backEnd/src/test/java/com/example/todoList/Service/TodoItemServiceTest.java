@@ -1,11 +1,9 @@
 package com.example.todoList.Service;
 
-import com.example.todoList.dao.TodoListRepository;
+import com.example.todoList.dao.TodoItemRepository;
 import com.example.todoList.domain.Status;
-import com.example.todoList.domain.TodoList;
+import com.example.todoList.domain.TodoItem;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import javafx.application.Application;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,78 +22,78 @@ import static org.junit.Assert.*;
 @SpringBootTest
 @ActiveProfiles("test")
 @Transactional
-public class TodoListServiceTest{
+public class TodoItemServiceTest {
 
     @Autowired
-    private TodoListRepository todoListRepository;
+    private TodoItemRepository todoItemRepository;
 
     @Autowired
-    private TodoListService todoListService;
+    private TodoItemService todoItemService;
 
     @Autowired
     private ObjectMapper objectMapper;
 
     @Test
     public void should_return_all_when_get() {
-        TodoList list = new TodoList("todo", Status.pending);
-        todoListRepository.save(list);
-        todoListRepository.findAll();
-        List<TodoList> getAll = todoListService.getAll();
+        TodoItem list = new TodoItem("todo", Status.pending);
+        todoItemRepository.save(list);
+        todoItemRepository.findAll();
+        List<TodoItem> getAll = todoItemService.getAll();
 
         assertEquals("todo", getAll.get(0).getDescription());
     }
 
     @Test
     public void should_return_list_create_list() {
-        TodoList list = new TodoList(1,"homework", Status.pending,1);
-        todoListRepository.save(list);
-        TodoList createList = todoListService.create(list.getDescription());
+        TodoItem list = new TodoItem(1,"homework", Status.pending,1);
+        todoItemRepository.save(list);
+        TodoItem createList = todoItemService.create(list.getDescription());
         assertEquals(list.getDescription(),createList.getDescription());
         assertEquals(list.getStatus(), createList.getStatus());
     }
 
     @Test
     public void should_return_update_index_order_list_when_update_order_index() {
-        ArrayList<TodoList> todoLists = new ArrayList<>();
-        TodoList list = new TodoList("todo1", Status.pending,2);
-        TodoList list1 = new TodoList("todo2", Status.pending, 3);
-        TodoList list2 = new TodoList("todo3", Status.pending, 4);//0
+        ArrayList<TodoItem> todoLists = new ArrayList<>();
+        TodoItem list = new TodoItem("todo1", Status.pending,2);
+        TodoItem list1 = new TodoItem("todo2", Status.pending, 3);
+        TodoItem list2 = new TodoItem("todo3", Status.pending, 4);//0
         todoLists.add(list);
         todoLists.add(list1);
         todoLists.add(list2);
 
-        todoListRepository.save(list);
-        todoListRepository.save(list1);
-        todoListRepository.save(list2);
+        todoItemRepository.save(list);
+        todoItemRepository.save(list1);
+        todoItemRepository.save(list2);
 
-        todoListService.updateIndex(4, 2);
+        todoItemService.updateIndex(4, 2);
 
-        TodoList expectList = todoListRepository.findById(list.getId()).get();
+        TodoItem expectList = todoItemRepository.findById(list.getId()).get();
 
         assertEquals(3,expectList.getIndexOrder());
     }
 
     @Test
     public void should_return_true_and_index_order_change_when_delete_list() {
-        TodoList list = new TodoList("todo1", Status.pending,0);
-        TodoList list1 = new TodoList("todo2", Status.pending, 1);
-        TodoList list2 = new TodoList("todo3", Status.pending, 2);
-        TodoList list3 = new TodoList("todo4", Status.pending, 3);
+        TodoItem list = new TodoItem("todo1", Status.pending,0);
+        TodoItem list1 = new TodoItem("todo2", Status.pending, 1);
+        TodoItem list2 = new TodoItem("todo3", Status.pending, 2);
+        TodoItem list3 = new TodoItem("todo4", Status.pending, 3);
 
-        todoListRepository.save(list);
-        todoListRepository.save(list1);
-        todoListRepository.save(list2);
-        todoListRepository.save(list3);
+        todoItemRepository.save(list);
+        todoItemRepository.save(list1);
+        todoItemRepository.save(list2);
+        todoItemRepository.save(list3);
 
 
-        todoListService.deleteList(list.getId());
+        todoItemService.delete(list.getId());
 
-        Optional<TodoList> byIdList = todoListRepository.findById(list.getId());
-        List<TodoList> all = todoListRepository.findAll();
+        Optional<TodoItem> byIdList = todoItemRepository.findById(list.getId());
+        List<TodoItem> all = todoItemRepository.findAll();
         assertEquals(Optional.empty(), byIdList);
         assertEquals(3, all.size());
 
-        TodoList expectList = todoListRepository.findById(list1.getId()).get();
+        TodoItem expectList = todoItemRepository.findById(list1.getId()).get();
         assertEquals(0, expectList.getIndexOrder());
     }
 }

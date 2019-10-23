@@ -1,9 +1,9 @@
 package com.example.todoList.Controller;
 
 
-import com.example.todoList.Service.TodoListService;
+import com.example.todoList.Service.TodoItemService;
 import com.example.todoList.domain.Status;
-import com.example.todoList.domain.TodoList;
+import com.example.todoList.domain.TodoItem;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,15 +36,15 @@ public class TodoControllerTest{
     private ObjectMapper objectMapper;
 
     @MockBean
-    private  TodoListService mockTodoListService;
+    private TodoItemService mockTodoItemService;
 
     @Test
     public void should_return_200_code_status_when_get_all_list() throws Exception {
-        TodoList list = new TodoList("todo", Status.pending);
-        ArrayList<TodoList> todoLists = new ArrayList<>();
+        TodoItem list = new TodoItem("todo", Status.pending);
+        ArrayList<TodoItem> todoLists = new ArrayList<>();
         todoLists.add(list);
 
-        when(mockTodoListService.getAll()).thenReturn(todoLists);
+        when(mockTodoItemService.getAll()).thenReturn(todoLists);
 
         mockMvc.perform(get("/api/all"))
                 .andExpect(status().isOk());
@@ -52,8 +52,8 @@ public class TodoControllerTest{
 
     @Test
     public void should_return_200_code_status_when_create_todoList() throws Exception {
-        TodoList list = new TodoList(1,"first", Status.pending,1);
-        when(mockTodoListService.create(list.getDescription())).thenReturn(list);
+        TodoItem list = new TodoItem(1,"first", Status.pending,1);
+        when(mockTodoItemService.create(list.getDescription())).thenReturn(list);
         mockMvc.perform(post("/api/one")
                 .param("description", list.getDescription())
                 .param("pending", list.getStatus().toString()))
@@ -62,9 +62,9 @@ public class TodoControllerTest{
 
     @Test
     public void should_return_200_code_status_when_update_oneList() throws Exception {
-        TodoList list = new TodoList(1,"second", Status.pending,0);
+        TodoItem list = new TodoItem(1,"second", Status.pending,0);
 
-        when(mockTodoListService.update(list.getId(),list.getStatus().toString())).thenReturn(true);
+        when(mockTodoItemService.update(list.getId(),list.getStatus().toString())).thenReturn(true);
 
         mockMvc.perform(patch("/api/status/1")
                 .param("status", list.getStatus().toString()))
@@ -73,8 +73,8 @@ public class TodoControllerTest{
 
     @Test
     public void should_return_200_code_status_when_delete_oneList() throws Exception {
-        TodoList list = new TodoList(1,"second", Status.pending,1);
-        when(mockTodoListService.deleteList(list.getId())).thenReturn(true);
+        TodoItem list = new TodoItem(1,"second", Status.pending,1);
+        when(mockTodoItemService.delete(list.getId())).thenReturn(true);
 
         String s = objectMapper.writeValueAsString(list);
         mockMvc.perform(delete("/api/one")
@@ -84,14 +84,14 @@ public class TodoControllerTest{
 
     @Test
     public void should_return_200_code_status_when_change_index() throws Exception {
-        ArrayList<TodoList> todoLists = new ArrayList<>();
-        TodoList list = new TodoList("todo1", Status.pending,1);
-        TodoList list1 = new TodoList("todo2", Status.pending, 2);
-        TodoList list2 = new TodoList("todo3", Status.pending, 3);
+        ArrayList<TodoItem> todoLists = new ArrayList<>();
+        TodoItem list = new TodoItem("todo1", Status.pending,1);
+        TodoItem list1 = new TodoItem("todo2", Status.pending, 2);
+        TodoItem list2 = new TodoItem("todo3", Status.pending, 3);
         todoLists.add(list);
         todoLists.add(list1);
         todoLists.add(list2);
-        when(mockTodoListService.updateIndex(any(), any())).thenReturn(todoLists);
+        when(mockTodoItemService.updateIndex(any(), any())).thenReturn(todoLists);
         mockMvc.perform(patch("/api/indexOrder")
                .param("startIndex", "1")
                .param("endIndex","3"))

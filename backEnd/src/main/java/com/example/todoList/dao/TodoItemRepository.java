@@ -1,14 +1,14 @@
 package com.example.todoList.dao;
 
-import com.example.todoList.domain.TodoList;
+import com.example.todoList.domain.TodoItem;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.List;
 
 
-public interface TodoListRepository extends JpaRepository<TodoList, Integer> {
+public interface TodoItemRepository extends JpaRepository<TodoItem, Integer> {
 
-    List<TodoList> findAllById(Iterable<Integer> integers);
+    List<TodoItem> findAllById(Iterable<Integer> integers);
 
-    List<TodoList> findAllByOrderByIndexOrder();
+    List<TodoItem> findAllByOrderByIndexOrder();
 }

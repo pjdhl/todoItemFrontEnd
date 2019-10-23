@@ -3,7 +3,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "todo")
-public class TodoList {
+public class TodoItem {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -16,26 +16,26 @@ public class TodoList {
         return indexOrder;
     }
 
-    public TodoList(String description, Status status) {
+    public TodoItem(String description, Status status) {
         this.description = description;
         this.status = status;
     }
 
-    public TodoList() {
+    public TodoItem() {
     }
 
-    public TodoList(String description) {
+    public TodoItem(String description) {
         this.description = description;
     }
 
-    public TodoList(Integer id, String description, Status status, int index_order) {
+    public TodoItem(Integer id, String description, Status status, int index_order) {
         this.id = id;
         this.description = description;
         this.status = status;
         this.indexOrder = index_order;
     }
 
-    public TodoList(String description, Status status, int indexOrder) {
+    public TodoItem(String description, Status status, int indexOrder) {
         this.description = description;
         this.status = status;
         this.indexOrder = indexOrder;
