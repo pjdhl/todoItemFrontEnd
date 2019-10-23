@@ -1,0 +1,13 @@
+.Todo {
+  text-align: center;
+  background-color: rgb(247, 247, 247);
+}
+.container {
+  margin: 0 auto;
+  width: 70%;
+}
+.header {
+  margin: 0px;
+  padding-top: 20px;
+  color: #61dafb;
+}

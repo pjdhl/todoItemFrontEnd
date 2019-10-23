@@ -1,0 +1,23 @@
+spring:
+  datasource: &db
+    url: jdbc:mysql://localhost:3306/todoItem?characterEncoding=utf8
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database: MYSQL
+    show-sql: true
+    hibernate:
+      ddl-auto: none
+    properties:
+      hibernate:
+        format_sql: false
+        dialect : org.hibernate.dialect.MySQL5Dialect
+  flyway:
+    <<: *db
+    baseline_on_migrated: true
+    enabled: true
+    out-of-order: true
+    encoding: UTF-8
+  port:
+    8080

@@ -1,0 +1,22 @@
+ul {
+  list-style: none;
+  padding: 0px;
+}
+.list {
+  height: 100%;
+  color: #61dafb;
+  width: 600px;
+  margin: 0 auto;
+  text-align: left;
+}
+.add-item {
+  width: 80%;
+  height: 32px;
+  outline: none;
+  font-size: 20px;
+}
+.btn {
+  width: 80px;
+  height: 35px;
+  margin-left: 10px;
+}

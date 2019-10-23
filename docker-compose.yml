@@ -1,0 +1,62 @@
+version : '2'
+services:
+  web:
+    container_name: web
+    build:
+        context: .
+        dockerfile: ./frontEnd/nginxserver-dockerfile
+    ports:
+      - "80:80"
+    command: /bin/bash -c "nginx -g 'daemon off;'"
+    networks:
+      - net-spring-db
+    depends_on:
+      - app
+
+  app:
+    container_name: app
+    build:
+      context: .
+      dockerfile: ./backEnd/springapp-dockerfile
+    environment: # Pass environment variables to the service
+      SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/todoItem?characterEncoding=utf8
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    ports:
+      - "8080:8080"
+    networks:
+      - net-spring-db
+    volumes:
+      - /vol/development
+    depends_on:
+      - db
+    links:
+      - db
+
+  db:
+    container_name: db
+    build:
+      context: .
+      dockerfile: ./backEnd/mysqldb-dockerfile
+    environment:
+      - "MYSQL_ROOT_PASSWORD=root"
+      - "MYSQL_DATABASE=todoItem"
+      - "MYSQL_ROOT_HOST=%"
+    ports:
+      - "3306:3306"
+    restart: always
+    networks:
+      - net-spring-db
+    command: [
+      'mysqld',
+      '--innodb-buffer-pool-size=20M',
+      '--character-set-server=utf8',
+      '--collation-server=utf8_general_ci',
+      '--default-time-zone=+8:00',
+      '--lower-case-table-names=1'
+    ]
+
+
+networks:
+  net-spring-db:
+    driver: bridge
