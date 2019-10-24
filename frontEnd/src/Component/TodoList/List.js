@@ -9,7 +9,8 @@ class List extends Component {
         this.state = {
             todoPendingList: [],
             todoFinishList: [],
-            addValue: ""
+            addValue: "",
+            todoList: []
         }
     }
     componentDidMount() {
@@ -20,7 +21,11 @@ class List extends Component {
             .then(res => {
                 this.setState({
                     todoFinishList: res.data.filter(item => item.status === "finish"),
-                    todoPendingList: res.data.filter(item => item.status === "pending")
+                    todoPendingList: res.data.filter(item => item.status === "pending"),
+                })
+            }).then(() => {
+                this.setState({
+                    todoList: this.state.todoPendingList.concat(this.state.todoFinishList)
                 })
             }).catch(error => {
                 console.log(error)
@@ -81,20 +86,14 @@ class List extends Component {
     }
 
     render() {
-        var pendingItems = this.state.todoPendingList.map((item, index) => {
-            return (
-                <Item key={index} item={item} index={item.id} removeItem={this.removeItem.bind(this, item.id)} markTodoDone={this.changeStatus.bind(this, item, item.status === "finish" ? "pending" : "finish")} />
-            );
-        });
-        var finishItems = this.state.todoFinishList.map((item, index) => {
+        var todoItems = this.state.todoList.map((item, index) => {
             return (
                 <Item key={index} item={item} index={item.id} removeItem={this.removeItem.bind(this, item.id)} markTodoDone={this.changeStatus.bind(this, item, item.status === "finish" ? "pending" : "finish")} />
             );
         });
         return (
             <div className="list">
-                <ul className="list-group"> {pendingItems} </ul>
-                <ul className="list-group"> {finishItems} </ul>
+                <ul className="list-group"> {todoItems} </ul>
                 <input type="text" onChange={this.changeText.bind(this)} value={this.state.addValue} className="add-item" placeholder="add a new todo..." />
                 <button onClick={this.addList.bind(this)} className="btn">Add</button>
             </div>
