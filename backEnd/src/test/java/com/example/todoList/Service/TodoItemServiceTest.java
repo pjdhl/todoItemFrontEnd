@@ -30,70 +30,103 @@ public class TodoItemServiceTest {
     @Autowired
     private TodoItemService todoItemService;
 
-    @Autowired
-    private ObjectMapper objectMapper;
 
     @Test
-    public void should_return_all_when_get() {
-        TodoItem list = new TodoItem("todo", Status.pending);
-        todoItemRepository.save(list);
-        todoItemRepository.findAll();
-        List<TodoItem> getAll = todoItemService.getAll();
+    public void should_return_list_when_get_all() {
+        TodoItem list1 = new TodoItem("todo1", Status.pending);
+        TodoItem list2 = new TodoItem("todo2", Status.pending);
+        TodoItem list3 = new TodoItem("todo3", Status.pending);
 
-        assertEquals("todo", getAll.get(0).getDescription());
-    }
-
-    @Test
-    public void should_return_list_create_list() {
-        TodoItem list = new TodoItem(1,"homework", Status.pending,1);
-        todoItemRepository.save(list);
-        TodoItem createList = todoItemService.create(list.getDescription());
-        assertEquals(list.getDescription(),createList.getDescription());
-        assertEquals(list.getStatus(), createList.getStatus());
-    }
-
-    @Test
-    public void should_return_update_index_order_list_when_update_order_index() {
-        ArrayList<TodoItem> todoLists = new ArrayList<>();
-        TodoItem list = new TodoItem("todo1", Status.pending,2);
-        TodoItem list1 = new TodoItem("todo2", Status.pending, 3);
-        TodoItem list2 = new TodoItem("todo3", Status.pending, 4);//0
-        todoLists.add(list);
-        todoLists.add(list1);
-        todoLists.add(list2);
-
-        todoItemRepository.save(list);
-        todoItemRepository.save(list1);
-        todoItemRepository.save(list2);
-
-        todoItemService.updateIndex(4, 2);
-
-        TodoItem expectList = todoItemRepository.findById(list.getId()).get();
-
-        assertEquals(3,expectList.getIndexOrder());
-    }
-
-    @Test
-    public void should_return_true_and_index_order_change_when_delete_list() {
-        TodoItem list = new TodoItem("todo1", Status.pending,0);
-        TodoItem list1 = new TodoItem("todo2", Status.pending, 1);
-        TodoItem list2 = new TodoItem("todo3", Status.pending, 2);
-        TodoItem list3 = new TodoItem("todo4", Status.pending, 3);
-
-        todoItemRepository.save(list);
         todoItemRepository.save(list1);
         todoItemRepository.save(list2);
         todoItemRepository.save(list3);
 
+        List<TodoItem> getAll = todoItemService.getAll();
 
-        todoItemService.delete(list.getId());
+        assertEquals("todo1", getAll.get(0).getDescription());
+        assertEquals(3, getAll.size());
+    }
 
-        Optional<TodoItem> byIdList = todoItemRepository.findById(list.getId());
-        List<TodoItem> all = todoItemRepository.findAll();
+    @Test
+    public void should_status_is_pending_and_index_order_from_0_start_when_add_item() {
+        String todo_one = "todo one";
+        TodoItem createList = todoItemService.create(todo_one);
+
+        assertEquals(todo_one,createList.getDescription());
+        assertEquals(Status.pending, createList.getStatus());
+        assertEquals(0, createList.getIndexOrder());
+    }
+    @Test
+    public void should_add_order_index_from_the_end_when_add_item() {
+        TodoItem list1 = new TodoItem(1,"homework1", Status.pending,0);
+        TodoItem list2 = new TodoItem(2,"homework2", Status.pending,1);
+
+        todoItemRepository.save(list1);
+        todoItemRepository.save(list2);
+
+        String add_description = "add todoList3";
+        TodoItem createList = todoItemService.create(add_description);
+
+        assertEquals(add_description,createList.getDescription());
+        assertEquals(list1.getStatus(), createList.getStatus());
+        assertEquals(3, todoItemRepository.findAll().size());
+        assertEquals(2, createList.getIndexOrder());
+    }
+    @Test
+    public void should_update_index_order_when_change_list_order() {
+        TodoItem todo1 = todoItemService.create("todo1");
+        TodoItem todo2 = todoItemService.create("todo2");
+        TodoItem todo3 = todoItemService.create("todo3");
+
+        todoItemService.updateIndex(2, 0);
+
+        assertEquals(1, todo1.getIndexOrder());
+        assertEquals(2, todo2.getIndexOrder());
+        assertEquals(0, todo3.getIndexOrder());
+    }
+
+
+    @Test
+    public void should_not_update_index_order_when_change_order_index_the_same() {
+        TodoItem todo1 = todoItemService.create("todo1");
+        TodoItem todo2 = todoItemService.create("todo2");
+        TodoItem todo3 = todoItemService.create("todo3");
+
+        todoItemService.updateIndex(2, 2);
+
+        assertEquals(0,todo1.getIndexOrder());
+        assertEquals(1, todo2.getIndexOrder());
+        assertEquals(2, todo3.getIndexOrder());
+    }
+
+
+    @Test(expected = IllegalArgumentException.class)
+    public void should_throw_exception_when_order_index_has_more_than_list_size() {
+        TodoItem todo1 = todoItemService.create("todo1");
+        TodoItem todo2 = todoItemService.create("todo2");
+        TodoItem todo3 = todoItemService.create("todo3");
+
+        todoItemService.updateIndex(4, 1);
+        assertEquals(0, todo1.getIndexOrder());
+        assertEquals(1, todo2.getIndexOrder());
+        assertEquals(2, todo3.getIndexOrder());
+    }
+
+    @Test
+    public void should_return_true_and_index_order_change_when_delete_list() {
+        TodoItem todo1 = todoItemService.create("todo1");
+        TodoItem todo2 = todoItemService.create("todo2");
+        TodoItem todo3 = todoItemService.create("todo3");
+
+        todoItemService.delete(todo1.getId());
+
+        Optional<TodoItem> byIdList = todoItemRepository.findById(todo1.getId());
         assertEquals(Optional.empty(), byIdList);
-        assertEquals(3, all.size());
 
-        TodoItem expectList = todoItemRepository.findById(list1.getId()).get();
-        assertEquals(0, expectList.getIndexOrder());
+        List<TodoItem> all = todoItemRepository.findAll();
+        assertEquals(2, all.size());
+
+        assertEquals(0, todo2.getIndexOrder());
+        assertEquals(1, todo3.getIndexOrder());
     }
 }

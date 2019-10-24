@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
@@ -66,32 +65,34 @@ public class TodoItemService {
     public List<TodoItem> updateIndex(Integer startIndex, Integer endIndex) {
         List<TodoItem> allOrderByIndexOrder = todoItemRepository.findAllByOrderByIndexOrder();
         if(startIndex < endIndex){
-           allOrderByIndexOrder.stream().map(
-                    item -> {
-                        if (item.getIndexOrder() == startIndex) {
-                            item.setIndexOrder(endIndex);
-                            todoItemRepository.save(item);
-                        } else if (item.getIndexOrder() > startIndex) {
-                            item.setIndexOrder(item.getIndexOrder() - 1);
-                            todoItemRepository.save(item);
-                        }
-                        return item;
-                    }
-            ).collect(Collectors.toList());
+            changeIndexOrder(startIndex, endIndex, allOrderByIndexOrder);
         }else if(startIndex > endIndex){
-              allOrderByIndexOrder.stream().map(
-                    item -> {
-                        if (item.getIndexOrder() == startIndex) {
-                            item.setIndexOrder(endIndex);
-                            todoItemRepository.save(item);
-                        } else if (item.getIndexOrder() >= endIndex) {
-                            item.setIndexOrder(item.getIndexOrder() + 1);
-                            todoItemRepository.save(item);
-                        }
-                        return item;
-                    }
-            ).collect(Collectors.toList());
+            for (TodoItem todoItem: allOrderByIndexOrder) {
+                if(startIndex > allOrderByIndexOrder.size() || endIndex > allOrderByIndexOrder.size()){
+                    throw new IllegalArgumentException("index order has over list size");
+                }else if (todoItem.getIndexOrder() == startIndex){
+                    todoItem.setIndexOrder(endIndex);
+                    todoItemRepository.save(todoItem);
+                }else if(todoItem.getIndexOrder() >= endIndex){
+                    todoItem.setIndexOrder(todoItem.getIndexOrder() + 1);
+                    todoItemRepository.save(todoItem);
+                }
+            }
         }
         return todoItemRepository.findAllByOrderByIndexOrder();
+    }
+
+    private void changeIndexOrder(Integer startIndex, Integer endIndex, List<TodoItem> allOrderByIndexOrder) {
+        for (TodoItem todoItem: allOrderByIndexOrder) {
+            if(startIndex > allOrderByIndexOrder.size() || endIndex > allOrderByIndexOrder.size()){
+                throw new IllegalArgumentException("index order has over list size");
+            }else if (todoItem.getIndexOrder() == startIndex){
+                todoItem.setIndexOrder(endIndex);
+                todoItemRepository.save(todoItem);
+            }else if(todoItem.getIndexOrder() > startIndex){
+                todoItem.setIndexOrder(todoItem.getIndexOrder() - 1);
+                todoItemRepository.save(todoItem);
+            }
+        }
     }
 }
