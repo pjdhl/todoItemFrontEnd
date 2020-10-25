@@ -1,104 +1,112 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import axios from 'axios';
 import Item from '../TodoItem/Item';
 import './list.css';
+import update from 'immutability-helper'
 
-class List extends Component {
-    constructor(props) {
-        super(props)
-        this.state = {
-            todoPendingList: [],
-            todoFinishList: [],
-            addValue: "",
-            todoList: []
-        }
-    }
-    componentDidMount() {
-        this.getList();
-    }
-    getList() {
-        axios.get("http://localhost:8080/api/all")
-            .then(res => {
-                this.setState({
-                    todoFinishList: res.data.filter(item => item.status === "finish"),
-                    todoPendingList: res.data.filter(item => item.status === "pending"),
-                })
-            }).then(() => {
-                this.setState({
-                    todoList: this.state.todoPendingList.concat(this.state.todoFinishList)
-                })
-            }).catch(error => {
-                console.log(error)
-            });
-    }
+const List = ({ remove, title, items = [], listId, refresh }) => {
+    const list = (items.filter(item => item.status === "pending")).concat(items.filter(item => item.status === "finish"))
+    const [item, setItem] = useState(list);
+    const [addValue, setAddValue] = useState("");
 
-    saveItem(desc) {
+    useEffect(() => {
+        setItem(list)
+    }, [items])
+    const saveItem = (desc) => {
         axios({
             method: 'post',
             url: 'http://localhost:8080/api/one',
             params: {
                 description: desc,
+                todoListId: listId
             }
         }).then((res) => {
-            this.getList();
+            refresh()
         }).catch((error) => {
             console.log(error)
         });
     }
-    removeItem(id) {
+    const removeItem = (index) => {
         axios({
             method: 'delete',
             url: 'http://localhost:8080/api/one',
             params: {
-                id: id
+                id: index
             }
-        }).then(() => {
-            this.getList();
+        }).then((res) => {
+            refresh()
         }).catch((error) => {
             console.log(error)
         });
     }
-    changeStatus(item, status) {
+    const changeStatus = (item, status) => {
         axios({
             method: 'patch',
             url: `${"http://localhost:8080/api/status/" + item.id}`,
             params: {
                 status: status
             }
-        }).then(() => {
-            this.getList();
+        }).then((res) => {
+            refresh()
         }).catch((error) => {
             console.log(error)
         });
     }
 
-    changeText(e) {
-        this.setState({
-            addValue: e.target.value
-        })
-    }
-
-    addList() {
-        this.saveItem(this.state.addValue, 0);
-        this.setState({
-            addValue: ""
-        })
-    }
-
-    render() {
-        var todoItems = this.state.todoList.map((item, index) => {
-            return (
-                <Item key={index} item={item} index={item.id} removeItem={this.removeItem.bind(this, item.id)} markTodoDone={this.changeStatus.bind(this, item, item.status === "finish" ? "pending" : "finish")} />
-            );
+    const changeIndexOrder = (startIndex, endIndex) => {
+        axios({
+            method: 'patch',
+            url: "http://localhost:8080/api/indexOrder",
+            params: {
+                startIndex: startIndex,
+                endIndex: endIndex
+            }
+        }).then((res) => {
+            refresh()
+        }).catch((error) => {
+            console.log(error)
         });
-        return (
-            <div className="list">
-                <ul className="list-group"> {todoItems} </ul>
-                <input type="text" onChange={this.changeText.bind(this)} value={this.state.addValue} className="add-item" placeholder="add a new todo..." />
-                <button onClick={this.addList.bind(this)} className="btn">Add</button>
-            </div>
-        );
     }
+    const changeText = (e) => {
+        setAddValue(e.target.value)
+    }
+
+    const addList = () => {
+        saveItem(addValue);
+        setAddValue("");
+    }
+    const moveItem = useCallback(
+        (dragIndex, hoverIndex) => {
+            const dragItem = item[dragIndex]
+            setItem(
+                update(item, {
+                    $splice: [[dragIndex, 1], [hoverIndex, 0, dragItem]],
+                }),
+            )
+            changeIndexOrder(item[dragIndex].indexOrder, item[hoverIndex].indexOrder)
+        }, [item],
+    )
+    const todoList = item.map((item, index) => {
+        return (
+            <Item key={index}
+                index={index}
+                item={item}
+                id={item.id}
+                moveItem={moveItem}
+                removeItem={() => { removeItem(item.id) }}
+                markTodoDone={() => { changeStatus(item, item.status === "finish" ? "pending" : "finish") }} />
+        );
+    });
+
+    return (
+        <div className="item">
+            <header className="listHeader">{title}</header>
+            <button className="deleteList" onClick={remove}>删除todoList</button>
+            <ul className="list-group"> {todoList} </ul>
+            <input type="text" onChange={changeText} value={addValue} className="add-item" placeholder="add a new todo item..." />
+            <button onClick={addList} className="btn">添加Item</button>
+        </div>
+    )
 }
 
 

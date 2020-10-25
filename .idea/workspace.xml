@@ -2,107 +2,103 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="ac690084-e8bb-46b3-8f2e-054e9cf490bf" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backEnd/src/main/resources/application-test.yml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backEnd/src/main/resources/db/migration/V1__001_create_todo_table.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backEnd/src/main/resources/db/migration/V2__002_add_init_data.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backEnd/src/main/resources/db/migration/V3__003_add_index_field.sql" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontEnd/.idea/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontEnd/.idea/frontEnd.iml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontEnd/nginxserver-dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Java/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Java/.idea/Java.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Java/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Java/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Java/DataType/src/main/java/DataType.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Java/TODOList/.idea/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/../Java/TODOList/.idea/.gitignore" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Java/TODOList/.idea/TODOList.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Java/TODOList/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Java/TODOList/.idea/vcs.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Java/TODOList/Dockfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Java/TODOList/Dockfile-spring" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Java/TODOList/docker-compose.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Java/TODOList/init.sql" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Java/TODOList/mysqldb-dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Java/TODOList/nginx.conf" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Java/TODOList/springapp-dockerfile" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Java/TODOList/src/main/java/com/example/todoList/Controller/TodoController.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Java/TODOList/src/main/java/com/example/todoList/Service/TodoLIstService/TodoListService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Java/TODOList/src/main/java/com/example/todoList/Service/TodoListService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Java/TODOList/src/main/java/com/example/todoList/dao/TodoListRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Java/TODOList/src/main/java/com/example/todoList/domain/Status.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Java/TODOList/src/main/java/com/example/todoList/domain/TodoList.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Java/TODOList/src/main/resources/application-test.properties" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Java/TODOList/src/main/resources/application.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Java/TODOList/src/test/java/com/example/todoList/Controller/TodoControllerTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Java/TODOList/src/test/java/com/example/todoList/Controller/TodoListControllerTestConfiguration.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Java/TODOList/src/test/java/com/example/todoList/Service/TodoListServiceTest.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Java/TODOList/src/test/java/com/example/todoList/Service/TodoListServiceTestConfiguration.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../Java/TODOList/src/test/java/com/test/TodoListServiceTestConfiguration.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JavaBasic/.idea/JavaBasic.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JavaBasic/.idea/kotlinc.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JavaBasic/.idea/libraries/KotlinJavaRuntime.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JavaBasic/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../JavaBasic/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JavaBasic/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../JavaBasic/.idea/modules.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JavaBasic/DataType/src/main/java/DataType.java" beforeDir="false" afterPath="$PROJECT_DIR$/../JavaBasic/DataType/src/main/java/DataType.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JavaBasic/basic/basic.iml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../JavaBasic/basic/src/DataType.java" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/backEnd/Dockerfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backEnd/src/main/java/com/example/todoList/Controller/CommentController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backEnd/src/main/java/com/example/todoList/Controller/TodoItemController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backEnd/src/main/java/com/example/todoList/Controller/TodoListController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backEnd/src/main/java/com/example/todoList/Service/CommentService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backEnd/src/main/java/com/example/todoList/Service/TodoListService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backEnd/src/main/java/com/example/todoList/dao/CommentRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backEnd/src/main/java/com/example/todoList/dao/TodoListRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backEnd/src/main/java/com/example/todoList/domain/Comment.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backEnd/src/main/java/com/example/todoList/domain/ResourceNotFoundException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backEnd/src/main/java/com/example/todoList/domain/TodoList.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backEnd/src/main/resources/db/migration/V1__001_create_todoItems_table.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backEnd/src/main/resources/db/migration/V2__002_add_index_field.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backEnd/src/main/resources/db/migration/V3__003_add_create_time_field.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backEnd/src/main/resources/db/migration/V4__004_create_todoList.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backEnd/src/main/resources/db/migration/V5__005_add_foregin_key_for_todoItems.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backEnd/src/main/resources/db/migration/V6__006_create_comments_table.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backEnd/src/main/resources/db/migration/V7__007_add_create_time_for_comemnt.sql" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backEnd/src/test/java/com/example/todoList/Controller/CommentControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backEnd/src/test/java/com/example/todoList/Controller/TodoItemControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backEnd/src/test/java/com/example/todoList/Controller/TodoListControllerTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backEnd/src/test/java/com/example/todoList/Service/CommentServiceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backEnd/src/test/java/com/example/todoList/Service/TodoListServiceTest.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontEnd/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backEnd/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/backEnd/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backEnd/docker-compose.yml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/backEnd/init.sql" beforeDir="false" afterPath="$PROJECT_DIR$/backEnd/init.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backEnd/mysqldb-dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/backEnd/mysqldb-dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backEnd/springapp-dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/backEnd/springapp-dockerfile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backEnd/src/main/java/com/example/todoList/Controller/TodoController.java" beforeDir="false" afterPath="$PROJECT_DIR$/backEnd/src/main/java/com/example/todoList/Controller/TodoController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backEnd/src/main/java/com/example/todoList/Service/TodoListService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backEnd/src/main/java/com/example/todoList/Service/TodoListService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backEnd/src/main/java/com/example/todoList/TodoListApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/backEnd/src/main/java/com/example/todoList/TodoListApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backEnd/src/main/java/com/example/todoList/dao/TodoListRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backEnd/src/main/java/com/example/todoList/dao/TodoListRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backEnd/src/main/java/com/example/todoList/domain/TodoList.java" beforeDir="false" afterPath="$PROJECT_DIR$/backEnd/src/main/java/com/example/todoList/domain/TodoList.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backEnd/springapp-dockerfile" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backEnd/src/main/java/com/example/todoList/Controller/TodoController.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backEnd/src/main/java/com/example/todoList/Service/TodoItemService.java" beforeDir="false" afterPath="$PROJECT_DIR$/backEnd/src/main/java/com/example/todoList/Service/TodoItemService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backEnd/src/main/java/com/example/todoList/dao/TodoItemRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/backEnd/src/main/java/com/example/todoList/dao/TodoItemRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backEnd/src/main/java/com/example/todoList/domain/ErrorResponse.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backEnd/src/main/java/com/example/todoList/domain/TodoItem.java" beforeDir="false" afterPath="$PROJECT_DIR$/backEnd/src/main/java/com/example/todoList/domain/TodoItem.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backEnd/src/main/resources/application-test.yml" beforeDir="false" afterPath="$PROJECT_DIR$/backEnd/src/main/resources/application-test.yml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backEnd/src/main/resources/application.yml" beforeDir="false" afterPath="$PROJECT_DIR$/backEnd/src/main/resources/application.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backEnd/src/test/java/com/example/todoList/Controller/TodoControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backEnd/src/test/java/com/example/todoList/Controller/TodoControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backEnd/src/test/java/com/example/todoList/Service/TodoListServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backEnd/src/test/java/com/example/todoList/Service/TodoListServiceTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backEnd/src/main/resources/db/migration/V1__001_create_todo_table.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backEnd/src/main/resources/db/migration/V2__002_add_init_data.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backEnd/src/main/resources/db/migration/V3__003_add_index_field.sql" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backEnd/src/test/java/com/example/todoList/Controller/TodoControllerTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/backEnd/src/test/java/com/example/todoList/Service/TodoItemServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/backEnd/src/test/java/com/example/todoList/Service/TodoItemServiceTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/docker-compose.yml" beforeDir="false" afterPath="$PROJECT_DIR$/docker-compose.yml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontEnd/docker-compose.yml" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontEnd/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/frontEnd/.idea/vcs.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontEnd/nginx.conf" beforeDir="false" afterPath="$PROJECT_DIR$/frontEnd/nginx.conf" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontEnd/nginxserver-dockerfile" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/frontEnd/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontEnd/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontEnd/src/App.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontEnd/src/App.css" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontEnd/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontEnd/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontEnd/src/Component/TodoItem/Item.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontEnd/src/Component/TodoItem/Item.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontEnd/src/Component/TodoItem/Item.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontEnd/src/Component/TodoItem/Item.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/frontEnd/src/Component/TodoList/List.js" beforeDir="false" afterPath="$PROJECT_DIR$/frontEnd/src/Component/TodoList/List.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontEnd/src/Component/TodoList/list.css" beforeDir="false" afterPath="$PROJECT_DIR$/frontEnd/src/Component/TodoList/list.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontEnd/src/logo.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontEnd/src/test.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontEnd/src/test1.js" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/frontEnd/yarn.lock" beforeDir="false" afterPath="$PROJECT_DIR$/frontEnd/yarn.lock" afterDir="false" />
     </list>
-    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
+  <component name="ComposerSettings">
+    <execution>
+      <executable />
+    </execution>
+  </component>
   <component name="DefaultGradleProjectSettings">
     <option name="isMigrated" value="true" />
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/../.." />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
   </component>
   <component name="ProjectId" id="1SUctQgvstSVmA7ffW7RAfTJMmO" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
   <component name="PropertiesComponent">
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="aspect.path.notification.shown" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="node.js.detected.package.eslint" value="true" />
+    <property name="node.js.detected.package.tslint" value="true" />
+    <property name="node.js.path.for.package.eslint" value="project" />
+    <property name="node.js.path.for.package.tslint" value="project" />
+    <property name="node.js.selected.package.eslint" value="(autodetect)" />
+    <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
     <property name="nodejs_npm_path_reset_for_default_project" value="true" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
     <property name="project.structure.side.proportion" value="0.0" />
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -114,20 +110,55 @@
       <option name="number" value="Default" />
       <option name="presentableId" value="Default" />
       <updated>1571621828367</updated>
+      <workItem from="1571967572134" duration="728000" />
+      <workItem from="1572268755896" duration="76000" />
+      <workItem from="1572518133294" duration="1014000" />
+      <workItem from="1572606503242" duration="62000" />
+      <workItem from="1572794552287" duration="4682000" />
+      <workItem from="1573094668062" duration="1866000" />
+      <workItem from="1573454518999" duration="2649000" />
+      <workItem from="1591748982076" duration="79000" />
+      <workItem from="1599707919575" duration="87000" />
+      <workItem from="1599741217868" duration="7347000" />
+      <workItem from="1603211127005" duration="307000" />
+      <workItem from="1603212315867" duration="65000" />
+      <workItem from="1603212813918" duration="2035000" />
     </task>
     <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="2" />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
     <option name="TAB_STATES">
       <map>
         <entry key="MAIN">
           <value>
-            <State>
-              <option name="COLUMN_ORDER" />
-            </State>
+            <State />
           </value>
         </entry>
       </map>
     </option>
+    <option name="RECENT_FILTERS">
+      <map>
+        <entry key="Branch">
+          <value>
+            <list />
+          </value>
+        </entry>
+        <entry key="User">
+          <value>
+            <list />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="614" y="246" key="RollbackChangesDialog" timestamp="1599748686517">
+      <screen x="0" y="23" width="1680" height="1027" />
+    </state>
+    <state x="614" y="246" key="RollbackChangesDialog/0.23.1680.1027@0.23.1680.1027" timestamp="1599748686517" />
   </component>
 </project>

@@ -4,7 +4,7 @@ services:
     container_name: web
     build:
         context: .
-        dockerfile: ./frontEnd/nginxserver-dockerfile
+        dockerfile: frontEnd/Dockerfile
     ports:
       - "80:80"
     command: /bin/bash -c "nginx -g 'daemon off;'"
@@ -17,7 +17,7 @@ services:
     container_name: app
     build:
       context: .
-      dockerfile: ./backEnd/springapp-dockerfile
+      dockerfile: backEnd/Dockerfile
     environment: # Pass environment variables to the service
       SPRING_DATASOURCE_URL: jdbc:mysql://db:3306/todoItem?characterEncoding=utf8
       SPRING_DATASOURCE_USERNAME: root

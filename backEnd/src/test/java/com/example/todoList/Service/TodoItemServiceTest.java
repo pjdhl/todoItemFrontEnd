@@ -1,9 +1,10 @@
 package com.example.todoList.Service;
 
 import com.example.todoList.dao.TodoItemRepository;
+import com.example.todoList.dao.TodoListRepository;
 import com.example.todoList.domain.Status;
 import com.example.todoList.domain.TodoItem;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.example.todoList.domain.TodoList;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,16 +31,20 @@ public class TodoItemServiceTest {
     @Autowired
     private TodoItemService todoItemService;
 
+    @Autowired
+    private TodoListRepository todoListRepository;
+
 
     @Test
     public void should_return_list_when_get_all() {
-        TodoItem list1 = new TodoItem("todo1", Status.pending);
-        TodoItem list2 = new TodoItem("todo2", Status.pending);
-        TodoItem list3 = new TodoItem("todo3", Status.pending);
+        TodoList todoList = new TodoList("todolisttodoListSave.getId()");
+        todoList.setId(1);
+        Integer id = todoListRepository.save(todoList).getId();
+        TodoList todoListSave = todoListRepository.findById(id).get();
 
-        todoItemRepository.save(list1);
-        todoItemRepository.save(list2);
-        todoItemRepository.save(list3);
+        todoItemService.create("todo1",todoListSave.getId());
+        todoItemService.create("todo2",todoListSave.getId());
+        todoItemService.create("todo3",todoListSave.getId());
 
         List<TodoItem> getAll = todoItemService.getAll();
 
@@ -48,24 +53,30 @@ public class TodoItemServiceTest {
     }
 
     @Test
-    public void should_status_is_pending_and_index_order_from_0_start_when_add_item() {
+    public void should_status_is_pending_and_index_order_from_0_start_and_have_create_time_when_add_item() {
         String todo_one = "todo one";
-        TodoItem createList = todoItemService.create(todo_one);
+        TodoList todoList = new TodoList("todolisttodo");
+        todoList.setId(2);
+        Integer id = todoListRepository.save(todoList).getId();
+        TodoList todoListSave = todoListRepository.findById(id).get();
+        TodoItem createList = todoItemService.create(todo_one,todoListSave.getId());
 
         assertEquals(todo_one,createList.getDescription());
         assertEquals(Status.pending, createList.getStatus());
         assertEquals(0, createList.getIndexOrder());
+        assertNotNull(createList.getCreateTime());
     }
     @Test
     public void should_add_order_index_from_the_end_when_add_item() {
-        TodoItem list1 = new TodoItem(1,"homework1", Status.pending,0);
-        TodoItem list2 = new TodoItem(2,"homework2", Status.pending,1);
-
-        todoItemRepository.save(list1);
-        todoItemRepository.save(list2);
+        TodoList todoList = new TodoList("todolisttodo");
+        todoList.setId(2);
+        Integer id = todoListRepository.save(todoList).getId();
+        TodoList todoListSave = todoListRepository.findById(id).get();
+        TodoItem list1 = todoItemService.create("todo1",todoListSave.getId());
+        TodoItem list2 = todoItemService.create("todo2",todoListSave.getId());
 
         String add_description = "add todoList3";
-        TodoItem createList = todoItemService.create(add_description);
+        TodoItem createList = todoItemService.create(add_description,todoListSave.getId());
 
         assertEquals(add_description,createList.getDescription());
         assertEquals(list1.getStatus(), createList.getStatus());
@@ -74,9 +85,13 @@ public class TodoItemServiceTest {
     }
     @Test
     public void should_update_index_order_when_change_list_order() {
-        TodoItem todo1 = todoItemService.create("todo1");
-        TodoItem todo2 = todoItemService.create("todo2");
-        TodoItem todo3 = todoItemService.create("todo3");
+        TodoList todoList = new TodoList("todolisttodo");
+        todoList.setId(2);
+        Integer id = todoListRepository.save(todoList).getId();
+        TodoList todoListSave = todoListRepository.findById(id).get();
+        TodoItem todo1 = todoItemService.create("todo1",todoListSave.getId());
+        TodoItem todo2 = todoItemService.create("todo2",todoListSave.getId());
+        TodoItem todo3 = todoItemService.create("todo3",todoListSave.getId());
 
         todoItemService.updateIndex(2, 0);
 
@@ -88,9 +103,13 @@ public class TodoItemServiceTest {
 
     @Test
     public void should_not_update_index_order_when_change_order_index_the_same() {
-        TodoItem todo1 = todoItemService.create("todo1");
-        TodoItem todo2 = todoItemService.create("todo2");
-        TodoItem todo3 = todoItemService.create("todo3");
+        TodoList todoList = new TodoList("todolisttodo");
+        todoList.setId(2);
+        Integer id = todoListRepository.save(todoList).getId();
+        TodoList todoListSave = todoListRepository.findById(id).get();
+        TodoItem todo1 = todoItemService.create("todo1",todoListSave.getId());
+        TodoItem todo2 = todoItemService.create("todo2",todoListSave.getId());
+        TodoItem todo3 = todoItemService.create("todo3",todoListSave.getId());
 
         todoItemService.updateIndex(2, 2);
 
@@ -102,9 +121,13 @@ public class TodoItemServiceTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void should_throw_exception_when_order_index_has_more_than_list_size() {
-        TodoItem todo1 = todoItemService.create("todo1");
-        TodoItem todo2 = todoItemService.create("todo2");
-        TodoItem todo3 = todoItemService.create("todo3");
+        TodoList todoList = new TodoList("todolisttodo");
+        todoList.setId(2);
+        Integer id = todoListRepository.save(todoList).getId();
+        TodoList todoListSave = todoListRepository.findById(id).get();
+        TodoItem todo1 = todoItemService.create("todo1",todoListSave.getId());
+        TodoItem todo2 = todoItemService.create("todo2",todoListSave.getId());
+        TodoItem todo3 = todoItemService.create("todo3",todoListSave.getId());
 
         todoItemService.updateIndex(4, 1);
         assertEquals(0, todo1.getIndexOrder());
@@ -114,9 +137,13 @@ public class TodoItemServiceTest {
 
     @Test
     public void should_return_true_and_index_order_change_when_delete_list() {
-        TodoItem todo1 = todoItemService.create("todo1");
-        TodoItem todo2 = todoItemService.create("todo2");
-        TodoItem todo3 = todoItemService.create("todo3");
+        TodoList todoList = new TodoList("todolisttodo");
+        todoList.setId(2);
+        Integer id = todoListRepository.save(todoList).getId();
+        TodoList todoListSave = todoListRepository.findById(id).get();
+        TodoItem todo1 = todoItemService.create("todo1",todoListSave.getId());
+        TodoItem todo2 = todoItemService.create("todo2",todoListSave.getId());
+        TodoItem todo3 = todoItemService.create("todo3",todoListSave.getId());
 
         todoItemService.delete(todo1.getId());
 
@@ -126,7 +153,28 @@ public class TodoItemServiceTest {
         List<TodoItem> all = todoItemRepository.findAll();
         assertEquals(2, all.size());
 
+
         assertEquals(0, todo2.getIndexOrder());
         assertEquals(1, todo3.getIndexOrder());
+
+        assertEquals(0, todoListSave.getTodoItem().size());
+
+    }
+
+
+
+    @Test
+    public void should_delete_todo_item() {
+        TodoList todoList = new TodoList("todolisttodo");
+        todoList.setId(2);
+        Integer id = todoListRepository.save(todoList).getId();
+        TodoList todoListSave = todoListRepository.findById(id).get();
+        TodoItem todo1 = todoItemService.create("todo1",todoListSave.getId());
+
+        todoItemService.delete(todo1.getId());
+        assertFalse(todoItemRepository.findById(todo1.getId()).isPresent());
+        assertEquals(0, todoItemRepository.findAllById(new ArrayList<Integer>(){{
+            add(todo1.getId());
+        }}).size());
     }
 }

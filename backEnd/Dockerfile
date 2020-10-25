@@ -8,6 +8,6 @@ RUN mkdir -p /vol/development
 
 WORKDIR /vol/development
 
-COPY ./backEnd/build/libs/*.jar /vol/development/app.jar
+COPY ./* /vol/development/app.jar
 
 CMD ["java", "-Xmx200m", "-Djava.security.egd=file:/dev/./urandom","-jar","/vol/development/app.jar"]

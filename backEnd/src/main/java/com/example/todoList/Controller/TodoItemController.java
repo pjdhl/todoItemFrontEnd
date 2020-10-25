@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin
-public class TodoController {
+public class TodoItemController {
 
     @Autowired
     private TodoItemService todoItemService;
@@ -23,20 +23,20 @@ public class TodoController {
     }
 
     @PostMapping("/one")
-    public ResponseEntity create(@RequestParam("description") String description){
-        TodoItem list = todoItemService.create(description);
+    public ResponseEntity create(@RequestParam("description") String description,@RequestParam Integer todoListId){
+        TodoItem list = todoItemService.create(description,todoListId);
         return ResponseEntity.status(200).body(list);
     }
 
-    @PatchMapping("/status/{listId}")
-    public ResponseEntity updateStatus(@PathVariable Integer listId,@RequestParam("status") String status){
-        return todoItemService.update(listId,status)?
+    @PatchMapping("/status/{itemId}")
+    public ResponseEntity updateStatus(@PathVariable Integer itemId,@RequestParam("status") String status){
+        return todoItemService.update(itemId,status)?
                 ResponseEntity.ok().build():
                 ResponseEntity.badRequest().build();
     }
 
     @DeleteMapping("/one")
-    public ResponseEntity deleteList(@RequestParam Integer id){
+    public ResponseEntity delete(@RequestParam Integer id){
         if (todoItemService.delete(id)) {
             return ResponseEntity.ok().build();
         }else{
@@ -46,8 +46,8 @@ public class TodoController {
 
     @PatchMapping("/indexOrder")
     public ResponseEntity updateOrderIndex(@RequestParam Integer startIndex,@RequestParam Integer endIndex){
-        List<TodoItem> todoLists = todoItemService.updateIndex(startIndex, endIndex);
-        return todoLists.isEmpty() ? ResponseEntity.status(404).build():ResponseEntity.status(200).body(todoLists);
+        List<TodoItem> todoItemLists = todoItemService.updateIndex(startIndex, endIndex);
+        return todoItemLists.isEmpty() ? ResponseEntity.status(404).build():ResponseEntity.status(200).body(todoItemLists);
     }
 
 

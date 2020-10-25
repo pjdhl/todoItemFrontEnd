@@ -8,7 +8,6 @@ import java.util.List;
 
 public interface TodoItemRepository extends JpaRepository<TodoItem, Integer> {
 
-    List<TodoItem> findAllById(Iterable<Integer> integers);
 
     List<TodoItem> findAllByOrderByIndexOrder();
 }

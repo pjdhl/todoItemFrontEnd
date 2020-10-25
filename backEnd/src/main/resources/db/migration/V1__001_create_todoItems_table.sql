@@ -3,4 +3,4 @@ CREATE TABLE IF NOT EXISTS todo(
     description VARCHAR(255) NOT NULL,
     status INT(11) NOT NULL,
     PRIMARY KEY(id)
-)
+)ENGINE=InnoDB DEFAULT CHARSET=utf8;

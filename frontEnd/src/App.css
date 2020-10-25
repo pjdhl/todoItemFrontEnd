@@ -11,3 +11,33 @@
   padding-top: 20px;
   color: #61dafb;
 }
+.addBtn {
+  width: 120px;
+  height: 37px;
+  font-size: 16px;
+  margin-left: 20px;
+}
+.add-list {
+  width: 50%;
+  height: 32px;
+  outline: none;
+  font-size: 20px;
+  vertical-align: top;
+}
+.main-ul {
+  display: flex;
+  margin-left: 30px;
+  flex-wrap: wrap;
+}
+.List {
+  margin-left: 30px;
+  width: 31%;
+}
+.list_li {
+  display: inline-block;
+}
+.deleteBtn {
+  display: inline-block;
+  width: 120px;
+  height: 30px;
+}

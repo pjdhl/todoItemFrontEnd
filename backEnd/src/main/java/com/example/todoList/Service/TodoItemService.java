@@ -1,12 +1,19 @@
 package com.example.todoList.Service;
 
 import com.example.todoList.dao.TodoItemRepository;
+import com.example.todoList.dao.TodoListRepository;
 import com.example.todoList.domain.Status;
 import com.example.todoList.domain.TodoItem;
+import com.example.todoList.domain.TodoList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
+import java.sql.Time;
+import java.time.LocalTime;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -18,14 +25,34 @@ public class TodoItemService {
     @Autowired
     private TodoItemRepository todoItemRepository;
 
+    @Autowired
+    private TodoListRepository todoListRepository;
+
+    @Autowired
+    private EntityManager entityManager;
+
+
     public List<TodoItem>  getAll() {
-        return todoItemRepository.findAllByOrderByIndexOrder();
+
+        List<TodoItem> allByOrderByIndexOrder = todoItemRepository.findAllByOrderByIndexOrder();
+        return allByOrderByIndexOrder;
     }
 
-    public TodoItem create(String description) {
-        int count = todoItemRepository.findAll().size();
-        TodoItem list = new TodoItem(description, Status.pending,count);
-        return todoItemRepository.save(list);
+     public TodoItem  create(String description,Integer todoListId) {
+        int indexOrder = todoItemRepository.findAll().size();
+        TodoItem item = new TodoItem();
+        item.setDescription(description);
+        item.setStatus(Status.pending);
+        item.setIndexOrder(indexOrder);
+        item.setCreateTime(new Date());
+         Optional<TodoList> todoList = todoListRepository.findById(todoListId);
+         if(todoList.isPresent()){
+             TodoList todoList1 = todoList.get();
+             item.setTodoList(todoList1);
+             return todoItemRepository.save(item);
+         }else{
+             throw  new NullPointerException("todoList id not exist");
+         }
     }
 
 
@@ -44,13 +71,20 @@ public class TodoItemService {
         }
     }
 
+    //TODO:遇到问题，级连删除
     public boolean delete(Integer id) {
         Optional<TodoItem> itemOption = todoItemRepository.findById(id);
         if (!itemOption.isPresent()) {
             return false;
         }else {
-            int indexOrder = itemOption.get().getIndexOrder();
-            todoItemRepository.deleteById(id);
+            TodoItem item = itemOption.get();
+            int indexOrder = item.getIndexOrder();
+//            todoListRepository.findById(item.getTodoListId())
+//                    .get().getTodoItem()
+//                    .removeIf(a -> a.getId() == item.getId());
+            todoItemRepository.delete(item);
+//            entityManager.remove(item);
+//            entityManager.flush();
             List<TodoItem> allByOrderByIndexOrder = todoItemRepository.findAllByOrderByIndexOrder();
             for (TodoItem todoItem : allByOrderByIndexOrder) {
                 if(todoItem.getIndexOrder() > indexOrder){
@@ -73,7 +107,7 @@ public class TodoItemService {
                 }else if (todoItem.getIndexOrder() == startIndex){
                     todoItem.setIndexOrder(endIndex);
                     todoItemRepository.save(todoItem);
-                }else if(todoItem.getIndexOrder() >= endIndex){
+                }else if(todoItem.getIndexOrder() >= endIndex && todoItem.getIndexOrder()<startIndex){
                     todoItem.setIndexOrder(todoItem.getIndexOrder() + 1);
                     todoItemRepository.save(todoItem);
                 }
@@ -89,7 +123,8 @@ public class TodoItemService {
             }else if (todoItem.getIndexOrder() == startIndex){
                 todoItem.setIndexOrder(endIndex);
                 todoItemRepository.save(todoItem);
-            }else if(todoItem.getIndexOrder() > startIndex){
+                //TODO:test
+            }else if(todoItem.getIndexOrder() > startIndex && todoItem.getIndexOrder() <= endIndex){
                 todoItem.setIndexOrder(todoItem.getIndexOrder() - 1);
                 todoItemRepository.save(todoItem);
             }

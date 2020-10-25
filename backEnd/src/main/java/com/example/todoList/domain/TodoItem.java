@@ -1,7 +1,16 @@
 package com.example.todoList.domain;
+
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.Data;
+
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 @Entity
+@Data
 @Table(name = "todo")
 public class TodoItem {
 
@@ -11,57 +20,19 @@ public class TodoItem {
     private String description;
     private Status status;
     private int indexOrder;
+    private Date createTime;
 
-    public int getIndexOrder() {
-        return indexOrder;
+    @ManyToOne
+    @JsonIgnore
+    @JoinColumn(name = "todo_list_id")
+    private TodoList todoList;
+
+    @OneToMany(mappedBy = "todoItem",cascade = CascadeType.ALL,fetch = FetchType.EAGER)
+    @JsonIgnore
+    private List<Comment> comment = new ArrayList<>();
+
+    public Integer getTodoListId() {
+        return todoList.getId();
     }
-
-    public TodoItem(String description, Status status) {
-        this.description = description;
-        this.status = status;
-    }
-
-    public TodoItem() {
-    }
-
-    public TodoItem(String description) {
-        this.description = description;
-    }
-
-    public TodoItem(Integer id, String description, Status status, int index_order) {
-        this.id = id;
-        this.description = description;
-        this.status = status;
-        this.indexOrder = index_order;
-    }
-
-    public TodoItem(String description, Status status, int indexOrder) {
-        this.description = description;
-        this.status = status;
-        this.indexOrder = indexOrder;
-    }
-
-    public void setIndexOrder(int indexOrder) {
-        this.indexOrder = indexOrder;
-    }
-
-    public void setStatus(Status status) {
-        this.status = status;
-    }
-
-    public Status getStatus() {
-        return status;
-    }
-
-
-    public Integer getId() {
-        return id;
-    }
-
-
-    public String getDescription() {
-        return description;
-    }
-
 }
 

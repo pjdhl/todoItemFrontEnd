@@ -21,6 +21,13 @@ dependencies {
 		exclude group:'junit', module: 'junit'
 	}
 	testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-params', version: '5.4.1'
+	
+	compileOnly 'org.projectlombok:lombok:1.18.10'
+	annotationProcessor 'org.projectlombok:lombok:1.18.10'
+
+
+	testCompile 'org.projectlombok:lombok'
+	testAnnotationProcessor 'org.projectlombok:lombok'
 
 	testImplementation 'com.h2database:h2'
 
